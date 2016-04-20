@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/brantwellman/crowdsource-realtime/issues"
   },
-  "homepage": "https://github.com/brantwellman/crowdsource-realtime#readme"
+  "homepage": "https://github.com/brantwellman/crowdsource-realtime#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
+  }
 }
