@@ -6,8 +6,10 @@
    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    Testy testy
-
+    <h3 class="center">Your Survey has been created</h3>
+    <h4 class="center">Here are your links</h4>
+    <h4 class="center"><a href="<%= `/admin/surveys/${newSurvey.surveyId}` %>">Admin view</a></h4>
+    <h4 class="center"><a href="<%= `/surveys/${newSurvey.surveyId}` %>">Poll View</a></h4>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
   </body>
