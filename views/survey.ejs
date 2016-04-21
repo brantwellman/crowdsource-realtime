@@ -6,7 +6,14 @@
    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    Here is your magical surve
+    <h3 class="center">Survey Question:</h3>
+    <h4 class="center"><%= survey.surveyQuestion %></h4>
+    <div id="choices" class='center'>
+      <% for (var response in survey.surveyResponses) { %>
+        <button class='response'><%= response %></button><br/>
+      <% } %>
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
   </body>
