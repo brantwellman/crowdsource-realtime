@@ -13,15 +13,23 @@
     </div>
 
     <div class="row center submissions">
-       <form class="col s6 offset-s3">
+       <form method="POST" class="col s6 offset-s3" name="poll" action="/surveys">
          <div class="row">
            <div class="input-field">
-             <input placeholder="Option 1" id="" type="text" class="validate">
-             <label for=""></label>
+             <input placeholder="Option 1" id="" type="text" name="poll[responses]">
+             <label for="submissions"></label>
            </div>
            <div class="input-field">
-             <input placeholder="Option 2" id="" type="text" class="validate">
-             <label for=""></label>
+             <input placeholder="Option 2" id="" type="text" name="poll[responses]">
+             <label for="submissions"></label>
+           </div>
+           <div class="input-field">
+             <input placeholder="Option 3" id="" type="text" name="poll[responses]">
+             <label for="submissions"></label>
+           </div>
+           <div class="input-field">
+             <input placeholder="Option 4" id="" type="text" name="poll[responses]">
+             <label for="submissions"></label>
            </div>
          </div>
          <input type="submit" class="btn">
