@@ -24,7 +24,7 @@ describe('Server', () => {
   describe('GET /', () => {
 
     it('should return a 200', (done) => {
-      request.get('http://localhost:3000', (error, response) => {
+      request.get('http://localhost:3000/index.html', (error, response) => {
         if (error) { done(error); }
         assert.equal(response.statusCode, 200);
         done();
