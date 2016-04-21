@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Crowdsource It</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+   <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <h3 class="center">Your Survey has been created</h3>
+    <h4 class="center">Here are your links</h4>
+    <h4 class="center"><a href="<%= `/admin/surveys/${newSurvey.surveyId}` %>">Admin view</a></h4>
+    <h4 class="center"><a href="<%= `/surveys/${newSurvey.surveyId}` %>">Poll View</a></h4>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>
