@@ -21,36 +21,35 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.locals.poll = {};
+app.locals.title = 'Crowdsource';
+app.locals.surveys = {};
 
 app.get('/', function (req, res){
   res.render('index');
 });
 
-app.get('/admin', function (req, res) {
-  res.render('admin');
-});
-
-// app.get('/surveys/:id', (req, res) {
-//   app.locals.surveys
-//   res.render('survey, ')
-// });
-
 app.post('/surveys', (request, res) => {
   var pollId = generateId();
-  // console.log(surveyId)
   var pollData = request.body.poll;
   var pollQuestion = pollData.question;
   var pollResponses = {};
-  // console.log(pollData);
 
   pollData.responses.forEach(function(response){
     pollResponses[response] = 0;
   });
 
   var newSurvey = new Survey(pollId, pollQuestion, pollResponses);
-  // console.log(newSurvey.surveyId);
+  app.locals.surveys[newSurvey.id] = newSurvey;
   res.render('admin', { newSurvey: newSurvey });
+});
+
+app.get('/admin', function (req, res) {
+  res.render('admin');
+});
+
+app.get('/surveys/:id', (req, res) => {
+  var survey = app.locals.surveys[req.params.surveyId];
+  res.render('survey', {survey: survey});
 });
 
 module.exports = server;
