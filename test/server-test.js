@@ -24,7 +24,7 @@ describe('Server', () => {
   describe('GET /', () => {
 
     it('should return a 200', (done) => {
-      request.get('http://localhost:3000/index.html', (error, response) => {
+      request.get('http://localhost:3000', (error, response) => {
         if (error) { done(error); }
         assert.equal(response.statusCode, 200);
         done();
@@ -32,7 +32,6 @@ describe('Server', () => {
     });
 
     it('should have a the app title on the page', (done) => {
-      // var title = app.locals.title;
 
       request.get('http://localhost:3000', (error, response) => {
         if (error) { done(error); }
@@ -42,6 +41,5 @@ describe('Server', () => {
     });
 
   });
-
 
 });
