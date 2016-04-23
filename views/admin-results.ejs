@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Crowdsource It</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+   <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <h3 class="center"><%= survey.surveyQuestion %></h3>
+    <h3 class="center">Survey Results:</h3>
+    <div id="results" class='col s6 offset-s3'>
+      <ol class=''>
+        <% for (var response in survey.surveyResponses) { %>
+          <li class='response'><%= response %>:  <%= Math.round((survey.surveyResponses[response]/totalVotes)*100) %>%</li><br/>
+        <% } %>
+      </ol>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>

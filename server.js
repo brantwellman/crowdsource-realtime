@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const generateId = require('./lib/generate-id');
 const Survey = require('./lib/survey');
+const _ = require("lodash");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,7 +51,15 @@ app.get('/admin', function (req, res) {
 app.get('/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
   res.render('survey', {survey: survey});
-  console.log(survey.pollResponses)
+});
+
+app.get('/admin/surveys/:id', (req, res) => {
+  var survey = app.locals.surveys[req.params.surveyId];
+  // console.log(survey)
+  console.log(survey.surveyResponses)
+  var totalVotes = _.sum(_.values(survey.surveyResponses))
+  console.log(totalVotes)
+  res.render('admin-results', {survey: survey, totalVotes: totalVotes});
 });
 
 io.on('connection', function (socket) {
