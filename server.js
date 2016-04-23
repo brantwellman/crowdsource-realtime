@@ -58,12 +58,7 @@ io.on('connection', function (socket) {
     var surveyVotes = app.locals.surveys[Survey.surveyResponses];
     var test = app.locals.surveys;
     var vote = message.vote;
-    // console.log(app.locals.survey)
-    // console.log(test)
-    // console.log(surveyVotes.surveyResponses[vote]);
-    // console.log(surveyVotes.surveyResponses)
-    // console.log(surveyVotes.surveyResponses[vote])
-    // console.log(app.locals.surveys)
+    console.log(vote)
     if (channel === 'voteCast') {
       surveyVotes.surveyResponses[vote]++;
       // socket.emit('userVote', vote);

@@ -8,12 +8,15 @@
   <body>
     <h3 class="center">Survey Question:</h3>
     <h4 class="center"><%= survey.surveyQuestion %></h4>
-    <div id="choices" class='center'>
-      <% for (var response in survey.surveyResponses) { %>
-        <button class='response <%= `${survey.surveyId}` %>'><%= response %></button><br/>
-      <% } %>
+    <h5 id="user-vote" class="center"></h5>
+    <div id="buttons">
+      <div id="choices" class='center'>
+        <% for (var response in survey.surveyResponses) { %>
+          <button class='<%= `${survey.surveyId}` %> response'><%= response %></button><br/>
+        <% } %>
+      </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
   </body>
