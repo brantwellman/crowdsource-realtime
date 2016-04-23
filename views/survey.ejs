@@ -10,7 +10,7 @@
     <h4 class="center"><%= survey.surveyQuestion %></h4>
     <div id="choices" class='center'>
       <% for (var response in survey.surveyResponses) { %>
-        <button class='response'><%= response %></button><br/>
+        <button class='response <%= `${survey.surveyId}` %>'><%= response %></button><br/>
       <% } %>
     </div>
 

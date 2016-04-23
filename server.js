@@ -52,4 +52,27 @@ app.get('/surveys/:id', (req, res) => {
   res.render('survey', {survey: survey});
 });
 
+io.on('connection', function (socket) {
+
+  socket.on('message', function (channel, message) {
+    var surveyVotes = app.locals.surveys[Survey.surveyResponses];
+    var test = app.locals.surveys;
+    var vote = message.vote;
+    // console.log(app.locals.survey)
+    // console.log(test)
+    // console.log(surveyVotes.surveyResponses[vote]);
+    // console.log(surveyVotes.surveyResponses)
+    // console.log(surveyVotes.surveyResponses[vote])
+    // console.log(app.locals.surveys)
+    if (channel === 'voteCast') {
+      surveyVotes.surveyResponses[vote]++;
+      // socket.emit('userVote', vote);
+      // io.sockets.emit('voteCount', surveyVotes);
+    //   votes[socket.id] = message;
+      console.log(surveyVotes.surveyResponses);
+    }
+  });
+
+});
+
 module.exports = server;
