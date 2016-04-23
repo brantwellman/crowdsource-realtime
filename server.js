@@ -50,6 +50,7 @@ app.get('/admin', function (req, res) {
 app.get('/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
   res.render('survey', {survey: survey});
+  console.log(survey.pollResponses)
 });
 
 io.on('connection', function (socket) {
