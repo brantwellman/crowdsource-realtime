@@ -5,7 +5,8 @@ var userVote = $('#user-vote');
 var deactivate = $('#deactivate');
 var inactivated = $('#survey-inactivated');
 var resultsHeader = $('#results-header');
-
+var sharedResults = $('#shared-results');
+var loadedResults = $('#loaded-results');
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function () {
@@ -31,4 +32,17 @@ socket.on('deactivateSurvey', function(){
   inactivated.text("Sorry, this survey has been closed");
   deactivate.remove();
   resultsHeader.text("Final survey results for poll:");
+});
+
+socket.on('voteCount', function(message){
+  var percents = message.percents;
+  loadedResults.remove();
+  var i = 1;
+  for (var response in message) {
+    if (message.hasOwnProperty(response)) {
+      $(`#${i}`).text(`${response} - ${message[response]}%`);
+      i++;
+    }
+  }
+
 });
