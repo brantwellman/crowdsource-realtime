@@ -6,6 +6,7 @@ var deactivate = $('#deactivate');
 var inactivated = $('#survey-inactivated');
 var resultsHeader = $('#results-header');
 var sharedResults = $('#shared-results');
+var loadedResults = $('#loaded-results');
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function () {
@@ -35,8 +36,7 @@ socket.on('deactivateSurvey', function(){
 
 socket.on('voteCount', function(message){
   var percents = message.percents;
-  // console.log(message)
-  // console.log(percents)
+  loadedResults.remove();
   var i = 1;
   for (var response in message) {
     if (message.hasOwnProperty(response)) {

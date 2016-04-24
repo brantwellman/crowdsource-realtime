@@ -83,8 +83,6 @@ io.on('connection', function (socket) {
     if (channel === 'voteCast') {
       surveyVotes.surveyResponses[vote]++;
       var percents = votePercentages(surveyVotes.surveyResponses);
-      console.log(percents)
-      // io.sockets.emit('voteCount', {response: surveyVotes.surveyResponses, percents: percents});
       io.sockets.emit('voteCount', percents);
     } else if (channel === 'deactivateSurvey') {
       surveyVotes.active = false;

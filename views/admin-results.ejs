@@ -10,13 +10,23 @@
     <h3 class="center"><%= survey.surveyQuestion %></h3>
     <h4 id="closed" class='center'></h4>
     <div id="results" class='col s6 offset-s3'>
-      <ol class=''>
+      <!-- <ol id='loaded-results'>
         <% for (var response in survey.surveyResponses) { %>
           <li class='response'><%= response %> - <%= Math.round((survey.surveyResponses[response]/totalVotes)*100) %>%</li><br/>
         <% } %>
-      </ol>
+      </ol> -->
+      <h4 id="current-results" class="center">Current Survey Results:</h4>
+      <div id="shared-results" class="">
+        <ol>
+          <% var i = 1 %>
+          <% for (var response in survey.surveyResponses) { %>
+            <li id="<%= i %>" class='response'></li><br/>
+          <% i++ %>
+          <% } %>
+        </ol>
+      </div>
       <button id='deactivate' class='btn' >Deactivate Survey</button><br/>
-
+    </div>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
