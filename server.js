@@ -43,33 +43,13 @@ app.post('/surveys', (request, res) => {
   res.render('admin', { newSurvey: newSurvey });
 });
 
-function totalVotes(responses) {
-  if (_.sum(_.values(responses)) === 0) {
-    return 1;
-  } else {
-    return _.sum(_.values(responses));
-  }
-}
-  // return _.sum(_.values(responses));
-
-
-// function votePercents(responses) {
-//   for(var key in responses) {
-//     if(responses.hasOwnProperty(key)) {
-//       (responses[key]/totalVotes(responses))*100;
-//     }
-//   }
-// }
-
-// Math.round((survey.surveyResponses[response]/totalVotes)*100)
-
 app.get('/admin', function (req, res) {
   res.render('admin');
 });
 
 app.get('/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
-  // console.log(survey.active)
+
   if (survey.active === true) {
     res.render('survey', {survey: survey});
   } else {
@@ -79,13 +59,8 @@ app.get('/surveys/:id', (req, res) => {
 
 app.get('/admin/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
-  // console.log(survey.surveyResponses)
-  // var totalVotes = _.sum(_.values(survey.surveyResponses));
-  // console.log(totalVotes)
-//   console.log(survey)
-// console.log(votePercents(survey.surveyResponses))
+
   res.render('admin-results', {survey: survey, totalVotes: totalVotes((survey.surveyResponses))});
-  // res.render('admin-results', {survey: survey, votePercents: votePercents(survey.surveyResponses)});
 });
 
 io.on('connection', function (socket) {
@@ -93,29 +68,25 @@ io.on('connection', function (socket) {
   socket.on('message', function (channel, message) {
     var surveyVotes = app.locals.surveys[Survey.surveyResponses];
     var voteTotal = totalVotes(surveyVotes.surveyResponses);
-    // console.log(surveyVotes.surveyResponses)
-    // console.log(channel)
-    // var test = app.locals.surveys;
     var vote = message.vote;
-    // console.log(vote)
-    // console.log(Survey.active);
-    if (Survey.active === false) {
-      // console.log("You can't vote")
-    } else if (channel === 'voteCast') {
+
+    if (channel === 'voteCast') {
       surveyVotes.surveyResponses[vote]++;
-      // socket.emit('userVote', vote);
-      // console.log(surveyVotes.surveyResponses)
-      // io.sockets.emit('voteCount', surveyVotes);
-    //   votes[socket.id] = message;
-      // console.log(surveyVotes.surveyResponses);
+
     } else if (channel === 'deactivateSurvey') {
-      // console.log(message)
-      // console.log(surveyVotes)
       surveyVotes.active = false;
       io.sockets.emit('deactivateSurvey');
     }
   });
 
 });
+
+function totalVotes(responses) {
+  if (_.sum(_.values(responses)) === 0) {
+    return 1;
+  } else {
+    return _.sum(_.values(responses));
+  }
+}
 
 module.exports = server;

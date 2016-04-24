@@ -26,16 +26,6 @@ function getId(button) {
   return classes[0];
 }
 
-// socket.on('voteCount', function(message) {
-//   console.log(message.surveyResponses)
-//   var n = 1;
-//   for (var response in message.surveyResponses) {
-//     console.log(response)
-//     $(`#response-${n}`).text(`"${n}. ${response} - ${Math.round((message.surveyResponses[response]/totalVotes(message.surveyResponses))*100)} %"`)
-//     n++;
-//   }
-// });
-
 socket.on('deactivateSurvey', function(){
   buttons.remove();
   inactivated.text("Sorry, this survey has been closed");
