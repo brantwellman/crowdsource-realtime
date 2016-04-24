@@ -57,6 +57,16 @@ app.get('/surveys/:id', (req, res) => {
   }
 });
 
+app.get('/sharedsurveys/:id', (req, res) => {
+  var survey = app.locals.surveys[req.params.surveyId];
+
+  if (survey.active === true) {
+    res.render('shared-survey', {survey: survey});
+  } else {
+    res.render('closed-survey', {survey: survey});
+  }
+});
+
 app.get('/admin/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
 
@@ -72,7 +82,7 @@ io.on('connection', function (socket) {
 
     if (channel === 'voteCast') {
       surveyVotes.surveyResponses[vote]++;
-
+      io.sockets.emit('voteCount', surveyVotes.surveyResponses);
     } else if (channel === 'deactivateSurvey') {
       surveyVotes.active = false;
       io.sockets.emit('deactivateSurvey');
