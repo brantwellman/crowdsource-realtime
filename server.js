@@ -82,7 +82,10 @@ io.on('connection', function (socket) {
 
     if (channel === 'voteCast') {
       surveyVotes.surveyResponses[vote]++;
-      io.sockets.emit('voteCount', surveyVotes.surveyResponses);
+      var percents = votePercentages(surveyVotes.surveyResponses);
+      console.log(percents)
+      // io.sockets.emit('voteCount', {response: surveyVotes.surveyResponses, percents: percents});
+      io.sockets.emit('voteCount', percents);
     } else if (channel === 'deactivateSurvey') {
       surveyVotes.active = false;
       io.sockets.emit('deactivateSurvey');
@@ -90,6 +93,12 @@ io.on('connection', function (socket) {
   });
 
 });
+
+function votePercentages(responses) {
+  return _.mapValues(responses, function(votes) {
+    return Math.round((votes/totalVotes(responses))*100);
+  });
+}
 
 function totalVotes(responses) {
   if (_.sum(_.values(responses)) === 0) {

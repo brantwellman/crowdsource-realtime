@@ -34,19 +34,15 @@ socket.on('deactivateSurvey', function(){
 });
 
 socket.on('voteCount', function(message){
+  var percents = message.percents;
+  // console.log(message)
+  // console.log(percents)
   var i = 1;
   for (var response in message) {
     if (message.hasOwnProperty(response)) {
-      $(`#${i}`).text(`${response} - ${message[response]} votes`);
+      $(`#${i}`).text(`${response} - ${message[response]}%`);
       i++;
     }
   }
 
 });
-
-
-// <ol class=''>
-//   <% for (var response in survey.surveyResponses) { %>
-//     <li class='response'><%= response %> - <%= Math.round((survey.surveyResponses[response]/totalVotes)*100) %>%</li><br/>
-//   <% } %>
-// </ol>
