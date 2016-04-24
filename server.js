@@ -44,21 +44,31 @@ app.post('/surveys', (request, res) => {
   res.render('admin', { newSurvey: newSurvey });
 });
 
+// app.patch('/deactivate', (req, res) => {
+//   var survey = app.locals.surveys[req.params.surveyId];
+//   res.redirect('admin', {survey: survey});
+// });
+
 app.get('/admin', function (req, res) {
   res.render('admin');
+  // console.log(survey)
 });
 
 app.get('/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
-  res.render('survey', {survey: survey});
+  console.log(survey.active)
+  if (survey.active === true) {
+    res.render('survey', {survey: survey});
+  } else {
+    res.render('closed-survey', {survey: survey});
+  }
 });
 
 app.get('/admin/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
-  // console.log(survey)
-  console.log(survey.surveyResponses)
+  // console.log(survey.surveyResponses)
   var totalVotes = _.sum(_.values(survey.surveyResponses))
-  console.log(totalVotes)
+  // console.log(totalVotes)
   res.render('admin-results', {survey: survey, totalVotes: totalVotes});
 });
 
@@ -66,15 +76,25 @@ io.on('connection', function (socket) {
 
   socket.on('message', function (channel, message) {
     var surveyVotes = app.locals.surveys[Survey.surveyResponses];
-    var test = app.locals.surveys;
+    // var test = app.locals.surveys;
     var vote = message.vote;
-    console.log(vote)
-    if (channel === 'voteCast') {
+    // console.log(vote)
+    // console.log(Survey.active);
+    if (Survey.active === false) {
+      // console.log("You can't vote")
+    } else if (channel === 'voteCast') {
       surveyVotes.surveyResponses[vote]++;
       // socket.emit('userVote', vote);
       // io.sockets.emit('voteCount', surveyVotes);
     //   votes[socket.id] = message;
-      console.log(surveyVotes.surveyResponses);
+      // console.log(surveyVotes.surveyResponses);
+      console.log(Survey.active)
+    } else if (channel === 'deactivateSurvey') {
+      // console.log(message)
+      // console.log(surveyVotes)
+      surveyVotes.active = false;
+      io.sockets.emit('deactivateSurvey');
+      console.log(surveyVotes.active);
     }
   });
 
