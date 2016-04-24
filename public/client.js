@@ -4,14 +4,11 @@ var buttons = $('#choices button');
 var userVote = $('#user-vote');
 var deactivate = $('#deactivate');
 var inactivated = $('#survey-inactivated');
-// var closed = $('#closed');
 var resultsHeader = $('#results-header');
 
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function () {
-    // var id = getId(this);
-    // console.log(id)
     var classes = this.className.split(" ");
     var id = classes[0];
     socket.send('voteCast', {vote: this.innerText, surveyId: id});
@@ -21,7 +18,6 @@ for (var i = 0; i < buttons.length; i++) {
 }
 
 deactivate.on('click', function() {
-  // console.log(id)
   socket.send('deactivateSurvey', false);
 });
 
@@ -30,10 +26,19 @@ function getId(button) {
   return classes[0];
 }
 
+// socket.on('voteCount', function(message) {
+//   console.log(message.surveyResponses)
+//   var n = 1;
+//   for (var response in message.surveyResponses) {
+//     console.log(response)
+//     $(`#response-${n}`).text(`"${n}. ${response} - ${Math.round((message.surveyResponses[response]/totalVotes(message.surveyResponses))*100)} %"`)
+//     n++;
+//   }
+// });
+
 socket.on('deactivateSurvey', function(){
   buttons.remove();
   inactivated.text("Sorry, this survey has been closed");
   deactivate.remove();
-  // closed.text('You have closed this survey');
   resultsHeader.text("Final survey results for poll:");
 });

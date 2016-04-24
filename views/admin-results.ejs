@@ -12,7 +12,7 @@
     <div id="results" class='col s6 offset-s3'>
       <ol class=''>
         <% for (var response in survey.surveyResponses) { %>
-          <li class='response'><%= response %>:  <%= Math.round((survey.surveyResponses[response]/totalVotes)*100) %>%</li><br/>
+          <li class='response'><%= response %> - <%= Math.round((survey.surveyResponses[response]/totalVotes)*100) %>%</li><br/>
         <% } %>
       </ol>
       <button id='deactivate' class='btn' >Deactivate Survey</button><br/>
