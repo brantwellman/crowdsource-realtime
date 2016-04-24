@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const generateId = require('./lib/generate-id');
 const Survey = require('./lib/survey');
-
+const _ = require("lodash");
 const app = express();
 const port = process.env.PORT || 3000;
 const server = http.createServer(app)
@@ -49,26 +49,44 @@ app.get('/admin', function (req, res) {
 
 app.get('/surveys/:id', (req, res) => {
   var survey = app.locals.surveys[req.params.surveyId];
-  res.render('survey', {survey: survey});
-  console.log(survey.pollResponses)
+
+  if (survey.active === true) {
+    res.render('survey', {survey: survey});
+  } else {
+    res.render('closed-survey', {survey: survey});
+  }
+});
+
+app.get('/admin/surveys/:id', (req, res) => {
+  var survey = app.locals.surveys[req.params.surveyId];
+
+  res.render('admin-results', {survey: survey, totalVotes: totalVotes((survey.surveyResponses))});
 });
 
 io.on('connection', function (socket) {
 
   socket.on('message', function (channel, message) {
     var surveyVotes = app.locals.surveys[Survey.surveyResponses];
-    var test = app.locals.surveys;
+    var voteTotal = totalVotes(surveyVotes.surveyResponses);
     var vote = message.vote;
-    console.log(vote)
+
     if (channel === 'voteCast') {
       surveyVotes.surveyResponses[vote]++;
-      // socket.emit('userVote', vote);
-      // io.sockets.emit('voteCount', surveyVotes);
-    //   votes[socket.id] = message;
-      console.log(surveyVotes.surveyResponses);
+
+    } else if (channel === 'deactivateSurvey') {
+      surveyVotes.active = false;
+      io.sockets.emit('deactivateSurvey');
     }
   });
 
 });
+
+function totalVotes(responses) {
+  if (_.sum(_.values(responses)) === 0) {
+    return 1;
+  } else {
+    return _.sum(_.values(responses));
+  }
+}
 
 module.exports = server;

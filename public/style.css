@@ -9,3 +9,8 @@
 .response {
   margin-top: 10px;
 }
+
+#results {
+  margin-top: 100px;
+  font-size: 25px;
+}
