@@ -22,11 +22,6 @@ deactivate.on('click', function() {
   socket.send('deactivateSurvey', false);
 });
 
-function getId(button) {
-  var classes = this.className.split(" ");
-  return classes[0];
-}
-
 socket.on('deactivateSurvey', function(){
   buttons.remove();
   inactivated.text("Sorry, this survey has been closed");
@@ -44,5 +39,9 @@ socket.on('voteCount', function(message){
       i++;
     }
   }
-
 });
+
+function getId(button) {
+  var classes = this.className.split(" ");
+  return classes[0];
+}
