@@ -43,6 +43,7 @@ app.post('/surveys', (request, res) => {
   var newSurvey = new Survey(pollId, pollQuestion, pollResponses);
   app.locals.surveys[newSurvey.id] = newSurvey;
   res.render('admin', { newSurvey: newSurvey });
+  res.sendStatus(201);
 });
 
 app.get('/admin', function (req, res) {
@@ -94,4 +95,4 @@ io.on('connection', function (socket) {
 
 });
 
-module.exports = server;
+module.exports = app;
